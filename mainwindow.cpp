@@ -33,8 +33,11 @@ MainWindow::MainWindow(Database &db, QWidget *parent)
 
     ui->startDateEdit->setDisplayFormat("dd/MM/yyyy");
     ui->endDateEdit->setDisplayFormat("dd/MM/yyyy");
-    ui->startDateEdit->setDate(QDate::currentDate().addDays(-7));
-    ui->endDateEdit->setDate(QDate::currentDate());
+
+    if (QDate::currentDate().dayOfWeek() == 0)
+        on_lastWeekRangeMenu();
+    else
+        on_thisWeekRangeMenu();
 
     ui->page1Layout->addWidget(m_pSummaryListPage);
     ui->page2Layout->addWidget(m_pSummaryChartPage);
@@ -44,6 +47,24 @@ MainWindow::MainWindow(Database &db, QWidget *parent)
     ui->tableView->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->tableView->addAction(deleteAction);
     QObject::connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(onDeleteEventMenu()));
+
+    QMenu *setRangeMenu = new QMenu(this);
+    QAction *range1 = new QAction("This week", this);
+    QAction *range2 = new QAction("Last week", this);
+    QAction *range3 = new QAction("Past month", this);
+    QAction *range4 = new QAction("Past year", this);
+    QAction *range5 = new QAction("All time", this);
+    setRangeMenu->addAction(range1);
+    setRangeMenu->addAction(range2);
+    setRangeMenu->addAction(range3);
+    setRangeMenu->addAction(range4);
+    setRangeMenu->addAction(range5);
+    ui->setRangeButton->setMenu(setRangeMenu);
+    connect(range1, SIGNAL(triggered()), this, SLOT(on_thisWeekRangeMenu()));
+    connect(range2, SIGNAL(triggered()), this, SLOT(on_lastWeekRangeMenu()));
+    connect(range3, SIGNAL(triggered()), this, SLOT(on_pastMonthRangeMenu()));
+    connect(range4, SIGNAL(triggered()), this, SLOT(on_pastYearRangeMenu()));
+    connect(range5, SIGNAL(triggered()), this, SLOT(on_allTimeRangeMenu()));
 
     on_calendarWidget_clicked(ui->calendarWidget->selectedDate());
 
@@ -156,3 +177,46 @@ void MainWindow::on_endDateButton_clicked()
     if (QDialog::Accepted == dlg.exec())
         ui->endDateEdit->setDate(date);
 }
+
+
+void MainWindow::on_thisWeekRangeMenu()
+{
+    QDate today = QDate::currentDate();
+    int weekDay = today.dayOfWeek();
+    QDate weekStart = today.addDays(-weekDay);
+    QDate weekEnd = weekStart.addDays(7);
+    ui->startDateEdit->setDate(weekStart);
+    ui->endDateEdit->setDate(weekEnd);
+}
+
+void MainWindow::on_lastWeekRangeMenu()
+{
+    QDate today = QDate::currentDate();
+    int weekDay = today.dayOfWeek();
+    QDate weekStart = today.addDays(-weekDay);
+    QDate weekEnd = weekStart.addDays(7);
+    ui->startDateEdit->setDate(weekStart.addDays(-7));
+    ui->endDateEdit->setDate(weekEnd.addDays(-7));
+}
+
+void MainWindow::on_pastMonthRangeMenu()
+{
+    QDate today = QDate::currentDate();
+    ui->startDateEdit->setDate(today.addMonths(-1));
+    ui->endDateEdit->setDate(today);
+}
+
+void MainWindow::on_pastYearRangeMenu()
+{
+    QDate today = QDate::currentDate();
+    ui->startDateEdit->setDate(today.addYears(-1));
+    ui->endDateEdit->setDate(today);
+}
+
+void MainWindow::on_allTimeRangeMenu()
+{
+    QDate today = QDate::currentDate();
+    ui->startDateEdit->setDate(QDate(2000, 1, 1));
+    ui->endDateEdit->setDate(today);
+}
+

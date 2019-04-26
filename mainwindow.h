@@ -31,10 +31,13 @@ private slots:
     void on_calendarWidget_activated(const QDate &date);
     void on_queryButton_clicked();
     void onDeleteEventMenu();
-
     void on_startDateButton_clicked();
-
     void on_endDateButton_clicked();
+    void on_thisWeekRangeMenu();
+    void on_lastWeekRangeMenu();
+    void on_pastMonthRangeMenu();
+    void on_pastYearRangeMenu();
+    void on_allTimeRangeMenu();
 
 private:
     Ui::MainWindow *ui;
