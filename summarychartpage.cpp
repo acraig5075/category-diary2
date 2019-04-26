@@ -24,11 +24,14 @@ SummaryChartPage::SummaryChartPage(QWidget *parent)
     m_pMapper->setSeries(series);
     m_pMapper->setModel(m_pModel);
 
-    QPieSlice *slice = series->slices().at(0);
-    slice->setExploded(true);
-    slice->setLabelVisible(true);
-    slice->setPen(QPen(Qt::darkGreen, 2));
-    slice->setBrush(Qt::green);
+    if (!series->isEmpty())
+    {
+        QPieSlice *slice = series->slices().at(0);
+        slice->setExploded(true);
+        slice->setLabelVisible(true);
+        slice->setPen(QPen(Qt::darkGreen, 2));
+        slice->setBrush(Qt::green);
+    }
 
     QChart *chart = new QChart();
     chart->addSeries(series);
