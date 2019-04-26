@@ -219,4 +219,3 @@ void MainWindow::on_allTimeRangeMenu()
     ui->startDateEdit->setDate(QDate(2000, 1, 1));
     ui->endDateEdit->setDate(today);
 }
-
