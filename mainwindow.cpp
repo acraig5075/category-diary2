@@ -6,6 +6,7 @@
 #include "addeventdlg.h"
 #include "summarylistpage.h"
 #include "summarychartpage.h"
+#include <datepickerdlg.h>
 #include <QMessageBox>
 
 #define VERSION "1.0"
@@ -138,4 +139,20 @@ void MainWindow::on_queryButton_clicked()
         m_pSummaryListPage->setModel(fromDate, toDate, totalSum);
         m_pSummaryChartPage->setModel(fromDate, toDate, totalSum);
     }
+}
+
+void MainWindow::on_startDateButton_clicked()
+{
+    QDate date;
+    DatePickerDlg dlg(date, this);
+    if (QDialog::Accepted == dlg.exec())
+        ui->startDateEdit->setDate(date);
+}
+
+void MainWindow::on_endDateButton_clicked()
+{
+    QDate date;
+    DatePickerDlg dlg(date, this);
+    if (QDialog::Accepted == dlg.exec())
+        ui->endDateEdit->setDate(date);
 }

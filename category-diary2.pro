@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    datepickerdlg.cpp \
         main.cpp \
         mainwindow.cpp \
     database.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
     eventcalendarwidget.cpp
 
 HEADERS += \
+    datepickerdlg.h \
         mainwindow.h \
     database.h \
     eventsquerymodel.h \
@@ -50,6 +52,7 @@ HEADERS += \
     eventcalendarwidget.h
 
 FORMS += \
+    datepickerdlg.ui \
         mainwindow.ui \
     categoriesdlg.ui \
     addeventdlg.ui \

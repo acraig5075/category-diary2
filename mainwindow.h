@@ -32,6 +32,10 @@ private slots:
     void on_queryButton_clicked();
     void onDeleteEventMenu();
 
+    void on_startDateButton_clicked();
+
+    void on_endDateButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Database &m_db;
