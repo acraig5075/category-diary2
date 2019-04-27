@@ -41,6 +41,8 @@ private slots:
     void on_pastYearRangeMenu();
     void on_allTimeRangeMenu();
 
+    void on_clipboardButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Database &m_db;

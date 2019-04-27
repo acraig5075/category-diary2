@@ -9,8 +9,10 @@
 #include "summaryquerymodel.h"
 #include <datepickerdlg.h>
 #include <QMessageBox>
+#include <QSqlRecord>
+#include <QClipboard>
 
-#define VERSION "1.0"
+#define VERSION "1.1"
 
 MainWindow::MainWindow(Database &db, QWidget *parent)
     : QMainWindow(parent)
@@ -229,4 +231,30 @@ void MainWindow::SetSummaryModel(const QDate &fromDate, const QDate &toDate, int
     m_pSummaryModel->setToDate(toDate);
     m_pSummaryModel->setTotalSum(totalSum);
     m_pSummaryModel->update();
+}
+
+void MainWindow::on_clipboardButton_clicked()
+{
+    QString str;
+
+    int rowCount = m_pSummaryModel->rowCount();
+    for (int i = 0; i < rowCount; ++i)
+    {
+        QString name = m_pSummaryModel->record(i).value(0).toString();
+        double percent = m_pSummaryModel->record(i).value(1).toDouble();
+
+        str += QString(" %1 %2%;")
+                .arg(name)
+                .arg(QString::number(percent, 'f', 0));
+    }
+
+    if (!str.isEmpty())
+    {
+        str.remove(0, 1); // remove leading whitespace
+        str.chop(1); // remove trailing semi-colon
+        str.append('.');
+    }
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(str);
 }
