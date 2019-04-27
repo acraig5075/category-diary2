@@ -17,10 +17,10 @@ class SummaryChartPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit SummaryChartPage(QWidget *parent = nullptr);
+    explicit SummaryChartPage(SummaryQueryModel *pModel, QWidget *parent = nullptr);
     ~SummaryChartPage();
 
-    void setModel(const QDate &fromDate, const QDate &toDate, int totalSum);
+    void refresh(const QDate &fromDate, const QDate &toDate);
 
 private:
     Ui::SummaryChartPage *ui;

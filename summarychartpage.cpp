@@ -9,10 +9,10 @@
 
 QT_CHARTS_USE_NAMESPACE
 
-SummaryChartPage::SummaryChartPage(QWidget *parent)
+SummaryChartPage::SummaryChartPage(SummaryQueryModel *pModel, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::SummaryChartPage)
-    , m_pModel(new SummaryQueryModel(this))
+    , m_pModel(pModel)
     , m_pMapper(new QVPieModelMapper(this))
 {
     ui->setupUi(this);
@@ -49,13 +49,8 @@ SummaryChartPage::~SummaryChartPage()
     delete ui;
 }
 
-void SummaryChartPage::setModel(const QDate &fromDate, const QDate &toDate, int totalSum)
+void SummaryChartPage::refresh(const QDate &fromDate, const QDate &toDate)
 {
-    m_pModel->setFromDate(fromDate);
-    m_pModel->setToDate(toDate);
-    m_pModel->setTotalSum(totalSum);
-    m_pModel->update();
-
     QString label = QString("Summary for %1 to %2")
             .arg(fromDate.toString("d MMMM yyyy"))
             .arg(toDate.toString("d MMMM yyyy"));

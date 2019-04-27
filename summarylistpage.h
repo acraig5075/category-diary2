@@ -14,10 +14,10 @@ class SummaryListPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit SummaryListPage(QWidget *parent = nullptr);
+    explicit SummaryListPage(SummaryQueryModel *pModel, QWidget *parent = nullptr);
     ~SummaryListPage();
 
-    void setModel(const QDate &fromDate, const QDate &toDate, int totalSum);
+    void refresh(const QDate &fromDate, const QDate &toDate);
 
 private:
     Ui::SummaryListPage *ui;

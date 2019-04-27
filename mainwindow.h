@@ -11,6 +11,7 @@ class Database;
 class EventsQueryModel;
 class SummaryListPage;
 class SummaryChartPage;
+class SummaryQueryModel;
 
 class MainWindow : public QMainWindow
 {
@@ -23,6 +24,7 @@ public:
 private:
     void AddEvent(const QDate &date);
     void EventsChanged();
+    void SetSummaryModel(const QDate &fromDate, const QDate &toDate, int totalSum);
 
 private slots:
     void on_calendarWidget_clicked(const QDate &date);
@@ -43,6 +45,7 @@ private:
     Ui::MainWindow *ui;
     Database &m_db;
     EventsQueryModel *m_pEventsModel = nullptr;
+    SummaryQueryModel *m_pSummaryModel = nullptr;
     SummaryListPage *m_pSummaryListPage = nullptr;
     SummaryChartPage *m_pSummaryChartPage = nullptr;
 };

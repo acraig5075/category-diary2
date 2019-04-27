@@ -6,6 +6,7 @@
 #include "addeventdlg.h"
 #include "summarylistpage.h"
 #include "summarychartpage.h"
+#include "summaryquerymodel.h"
 #include <datepickerdlg.h>
 #include <QMessageBox>
 
@@ -16,8 +17,9 @@ MainWindow::MainWindow(Database &db, QWidget *parent)
     , ui(new Ui::MainWindow)
     , m_db(db)
     , m_pEventsModel(new EventsQueryModel(this))
-    , m_pSummaryListPage(new SummaryListPage(this))
-    , m_pSummaryChartPage(new SummaryChartPage(this))
+    , m_pSummaryModel(new SummaryQueryModel(this))
+    , m_pSummaryListPage(new SummaryListPage(m_pSummaryModel, this))
+    , m_pSummaryChartPage(new SummaryChartPage(m_pSummaryModel, this))
 {
     ui->setupUi(this);
 
@@ -157,8 +159,9 @@ void MainWindow::on_queryButton_clicked()
     int totalSum = m_db.sumRangePercentage(fromDate, toDate, ok);
     if (ok)
     {
-        m_pSummaryListPage->setModel(fromDate, toDate, totalSum);
-        m_pSummaryChartPage->setModel(fromDate, toDate, totalSum);
+        SetSummaryModel(fromDate, toDate, totalSum);
+        m_pSummaryListPage->refresh(fromDate, toDate);
+        m_pSummaryChartPage->refresh(fromDate, toDate);
     }
 }
 
@@ -218,4 +221,12 @@ void MainWindow::on_allTimeRangeMenu()
     QDate today = QDate::currentDate();
     ui->startDateEdit->setDate(QDate(2000, 1, 1));
     ui->endDateEdit->setDate(today);
+}
+
+void MainWindow::SetSummaryModel(const QDate &fromDate, const QDate &toDate, int totalSum)
+{
+    m_pSummaryModel->setFromDate(fromDate);
+    m_pSummaryModel->setToDate(toDate);
+    m_pSummaryModel->setTotalSum(totalSum);
+    m_pSummaryModel->update();
 }
