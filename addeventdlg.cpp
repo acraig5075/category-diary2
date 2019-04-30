@@ -12,6 +12,8 @@ AddEventDlg::AddEventDlg(const QDate &date, Database &db, QWidget *parent)
 {
     ui->setupUi(this);
 
+    setFixedHeight(sizeHint().height());
+
     QString caption = QString("Add Event for %1")
             .arg(date.toString("d MMMM yyyy"));
     setWindowTitle(caption);

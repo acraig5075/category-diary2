@@ -14,6 +14,8 @@ CategoriesDlg::CategoriesDlg(Database &db, QWidget *parent)
 {
     ui->setupUi(this);
 
+    setFixedWidth(sizeHint().width());
+
     ui->tableView->setModel(m_pModel);
     ui->tableView->verticalHeader()->hide();
     ui->tableView->hideColumn(0);
