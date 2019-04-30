@@ -1,5 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>images/eventindicator.png</file>
+        <file>images/add.ico</file>
+        <file>images/categories.ico</file>
+        <file>images/clipboard.ico</file>
+        <file>images/database.ico</file>
+        <file>images/date.ico</file>
+        <file>images/date-range.ico</file>
+        <file>images/delete.ico</file>
+        <file>images/edit.ico</file>
+        <file>images/query.ico</file>
     </qresource>
 </RCC>

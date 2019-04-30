@@ -12,7 +12,7 @@
 #include <QSqlRecord>
 #include <QClipboard>
 
-#define VERSION "1.1"
+#define VERSION "1.2"
 
 MainWindow::MainWindow(Database &db, QWidget *parent)
     : QMainWindow(parent)
@@ -48,6 +48,7 @@ MainWindow::MainWindow(Database &db, QWidget *parent)
     ui->tabWidget->setCurrentIndex(1);
 
     QAction *deleteAction = new QAction("Delete", this);
+    deleteAction->setIcon(QIcon(":/images/delete.ico"));
     ui->tableView->setContextMenuPolicy(Qt::ActionsContextMenu);
     ui->tableView->addAction(deleteAction);
     QObject::connect(deleteAction, SIGNAL(triggered(bool)), this, SLOT(onDeleteEventMenu()));

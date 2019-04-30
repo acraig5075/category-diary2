@@ -24,6 +24,9 @@ CategoriesDlg::CategoriesDlg(Database &db, QWidget *parent)
     QAction *deleteAction = new QAction("Delete", this);
     QAction *renameAction = new QAction("Rename...", this);
 
+    deleteAction->setIcon(QIcon(":/images/delete.ico"));
+    renameAction->setIcon(QIcon(":/images/edit.ico"));
+
     ui->tableView->addAction(deleteAction);
     ui->tableView->addAction(renameAction);
 

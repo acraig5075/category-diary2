@@ -50,6 +50,10 @@
           <property name="text">
            <string>Add</string>
           </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/images/add.ico</normaloff>:/images/add.ico</iconset>
+          </property>
          </widget>
         </item>
         <item>
@@ -82,7 +86,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
