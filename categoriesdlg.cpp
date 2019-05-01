@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QAction>
 #include <QMessageBox>
+#include <QSortFilterProxyModel>
 
 CategoriesDlg::CategoriesDlg(Database &db, QWidget *parent)
     : QDialog(parent)
@@ -16,12 +17,19 @@ CategoriesDlg::CategoriesDlg(Database &db, QWidget *parent)
 
     setFixedWidth(sizeHint().width());
 
-    ui->tableView->setModel(m_pModel);
+    // make tableView sortable
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(m_pModel);
+    proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+
+    ui->tableView->setModel(proxyModel);
     ui->tableView->verticalHeader()->hide();
     ui->tableView->hideColumn(0);
     ui->tableView->resizeColumnsToContents();
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableView->setContextMenuPolicy(Qt::ActionsContextMenu);
+    ui->tableView->setSortingEnabled(true);
+    ui->tableView->sortByColumn(2, Qt::DescendingOrder);
 
     QAction *deleteAction = new QAction("Delete", this);
     QAction *renameAction = new QAction("Rename...", this);
