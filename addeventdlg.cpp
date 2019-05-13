@@ -12,14 +12,12 @@ AddEventDlg::AddEventDlg(const QDate &date, Database &db, QWidget *parent)
 {
     ui->setupUi(this);
 
-    setFixedHeight(sizeHint().height());
-
     QString caption = QString("Add Event for %1")
             .arg(date.toString("d MMMM yyyy"));
     setWindowTitle(caption);
 
-    ui->comboBox->setModel(m_pModel);
-    ui->comboBox->setModelColumn(1);
+    ui->listView->setModel(m_pModel);
+    ui->listView->setModelColumn(1);
 }
 
 AddEventDlg::~AddEventDlg()
@@ -29,10 +27,14 @@ AddEventDlg::~AddEventDlg()
 
 void AddEventDlg::on_buttonBox_accepted()
 {
-    int index = ui->comboBox->currentIndex();
-    if (index != -1)
+    QItemSelectionModel *selection = ui->listView->selectionModel();
+    if (selection && selection->hasSelection())
     {
-        int id = m_pModel->getId(index);
-        m_db.addEvent(m_date, id);
+        QModelIndexList indexes = selection->selectedIndexes();
+        for (int i = 0; i < indexes.size(); ++i)
+        {
+            int id = m_pModel->getId(indexes[i].row());
+            m_db.addEvent(m_date, id);
+        }
     }
 }
